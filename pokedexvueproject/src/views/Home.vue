@@ -8,6 +8,7 @@
         <b-button class="col-2 mx-2" variant="primary" >Buscar</b-button>
       </b-form>
     <div class="mt-2">Value: {{ text }}</div>
+    <!-- 
     <b-list-group>
       <b-list-group-item class="pokemon-content">
         <b-row>
@@ -40,7 +41,13 @@
         </b-row>        
       </b-list-group-item>
     </b-list-group>
+ -->
 
+    <ul>
+      <li v-for="item in infoPokemon" :key="infoPokemon.id">
+        {{item.name}}
+      </li>
+    </ul>
     </b-container>
   </div>
 </template>
@@ -48,6 +55,9 @@
 <script>
 // @ is an alias to /src
 //import HelloWorld from '@/components/HelloWorld.vue'
+//importar axios
+import axios from "axios";
+
 
 export default {
   name: 'home',
@@ -56,9 +66,27 @@ export default {
   },
   data() {
       return {
-        text: ''
+        text: '',
+        infoPokemon:[]
       }
-  }
+  },
+  methods: {
+    async getPokemons(){
+      try {
+        let datos=await axios.get(`https://pokeapi.co/api/v2/pokemon`)
+        this.infoPokemon=datos.data.results;
+        //console.log(this.infoPokemon[0].name)
+      } catch (error) {
+       console.log(error) 
+      }
+      finally{
+
+      }
+    }
+  },
+  created() {
+    this.getPokemons();
+  },
 }
 </script>
 
