@@ -44,8 +44,8 @@
  -->
 
     <ul>
-      <li v-for="(item,index) in infoPokemon" :key="infoPokemon.id">
-       {{index}} - {{item.name}}
+      <li v-for="(item,index) in infoPokemon" :key="'poke'+index">
+       {{index}} - {{item.name}} - 
       </li>
     </ul>
     </b-container>
@@ -73,8 +73,10 @@ export default {
   methods: {
     async getPokemons(){
       try {
-        let datos=await axios.get(`https://pokeapi.co/api/v2/pokemon/?limit=964&offset=20`)
+        let datos=await axios.get(`https://pokeapi.co/api/v2/pokemon/?limit=964`)
+        
         this.infoPokemon= await datos.data.results;
+        console.log(infoPokemon)
         //console.log(this.infoPokemon[0].name)
       } catch (error) {
        console.log(error) 
