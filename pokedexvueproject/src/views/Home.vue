@@ -3,17 +3,14 @@
     <b-container class="mt-4">
       <h1 class="text-center">Mis Pokemones</h1>
       <b-form class="row  search-container">
-        <b-input class="col-9" v-model="text" placeholder="Ingresa el nombre del pokemon:">
+        <b-input class="col-9" v-model="search" placeholder="Ingresa el nombre del pokemon:">
         </b-input>
         <b-button class="col-2 mx-2" variant="primary" >Buscar</b-button>
       </b-form>
-    <div class="mt-2">Value: {{ text }}</div>
-
       <b-row>
-        <b-col class="col-xl-3 col-lg-4 col-md-4 col-sm-6  mb-4" v-for="(pokemon,index) in Pokemones" :key="'poke'+index">
+        <b-col class="col-xl-3 col-lg-4 col-md-4 col-sm-6  mb-4" v-for="(pokemon,index) in filteredList" :key="'poke'+index">
           <b-card class="text-center name-pokemon" footer-bg-variant="danger" :footer="pokemon.name">
             <img :src="imageUrl+pokemon.id+'.png'" alt="image not found">
-            <!-- <h4 class="name-pokemon">{{pokemon.name}}</h4> -->
           </b-card>
         </b-col>
       </b-row>
@@ -35,12 +32,19 @@ export default {
   },
   data() {
       return {
-        text: '',
+        search: '',
         Pokemones:[]
       }
   },
   computed: {
-    ...mapState(['imageUrl','apiUrl'])
+    ...mapState(['imageUrl','apiUrl']),
+    
+    //funcion Filtrar la lista de pokemones por la busqueda
+    filteredList(){
+      return this.Pokemones.filter(pokemon=>{
+        return pokemon.name.toLowerCase().includes(this.search.toLowerCase())
+      })
+    }
   },
   methods: {
     async getPokemons(){
@@ -65,11 +69,11 @@ export default {
 
       }
     }
-  },
+  } ,
   created() {
     this.getPokemons();
-  },
-}
+  }
+} 
 </script>
 
 <style  scoped>
