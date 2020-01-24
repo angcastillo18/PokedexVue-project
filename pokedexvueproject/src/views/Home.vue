@@ -32,21 +32,21 @@ export default {
   },
   data() {
       return {
-        search: '',
-        Pokemones:[]
+        search: ''
       }
   },
   computed: {
-    ...mapState(['imageUrl','apiUrl']),
+    ...mapState(['imageUrl','apiUrl','pokemonsArray']),
     
     //funcion Filtrar la lista de pokemones por la busqueda
     filteredList(){
-      return this.Pokemones.filter(pokemon=>{
+      return this.pokemonsArray.filter(pokemon=>{
         return pokemon.name.toLowerCase().includes(this.search.toLowerCase())
       })
     }
   },
   methods: {
+    /*
     async getPokemons(){
       try {
         //solo trabajaremos con 200 pokemones
@@ -69,9 +69,12 @@ export default {
 
       }
     }
+    */
   } ,
   created() {
-    this.getPokemons();
+    //this.getPokemons();
+    //llamar a la action del store ApiPokemons
+    this.$store.dispatch('loadPokemons')
   }
 } 
 </script>
