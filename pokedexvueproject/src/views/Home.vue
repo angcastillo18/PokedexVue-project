@@ -9,26 +9,27 @@
       </b-form>
       <b-row>
         <b-col class="col-xl-3 col-lg-4 col-md-4 col-sm-6  mb-4" v-for="(pokemon,index) in filteredList" :key="'poke'+index">
-          <b-card class="text-center name-pokemon" footer-bg-variant="danger" :footer="pokemon.name">
+          <b-card class="text-center pokemon-card" @click="loadInfoPokemon(pokemon.id)" footer-bg-variant="danger" :footer="pokemon.name">
             <img :src="imageUrl+pokemon.id+'.png'" alt="image not found">
           </b-card>
         </b-col>
       </b-row>
     </b-container>
+    <pokemonDetail  />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-//import HelloWorld from '@/components/HelloWorld.vue'
-//importar axios
-import axios from "axios";
-import {mapState} from "vuex";
+import pokemonDetail from '@/components/PokemonDetail.vue'
+/* //importar axios
+import axios from "axios"; */
+import {mapState,mapActions} from "vuex";
 
 export default {
   name: 'home',
   components: {
-    //HelloWorld
+    pokemonDetail
   },
   data() {
       return {
@@ -36,7 +37,7 @@ export default {
       }
   },
   computed: {
-    ...mapState(['imageUrl','apiUrl','pokemonsArray']),
+    ...mapState(['imageUrl','apiUrl','pokemonsArray','pokemonId']),
     
     //funcion Filtrar la lista de pokemones por la busqueda
     filteredList(){
@@ -46,6 +47,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['loadInfoPokemon','loadPokemons'])
     /*
     async getPokemons(){
       try {
@@ -70,11 +72,13 @@ export default {
       }
     }
     */
+
   } ,
   created() {
     //this.getPokemons();
     //llamar a la action del store ApiPokemons
-    this.$store.dispatch('loadPokemons')
+    //this.$store.dispatch('loadPokemons')
+    this.loadPokemons();
   }
 } 
 </script>
@@ -87,8 +91,9 @@ export default {
 .pokemon-content{
   max-width: 200px
 }
-.name-pokemon{
+.pokemon-card{
   text-transform: capitalize;
   color: white;
+  cursor: pointer;
 }
 </style>

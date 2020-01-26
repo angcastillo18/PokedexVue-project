@@ -9,12 +9,18 @@ export default new Vuex.Store({
   state: {
     imageUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/',
     apiUrl: 'https://pokeapi.co/api/v2/pokemon/',
-    pokemonsArray:[]
+    pokemonsArray:[],
+    pokemonId:'',
+    pokemonInfoArray:[]
   },//refresh the state with mutation
   mutations: {
-    SET_POSTS(state,pokemons){
+    SET_POSTS_POKEMONS(state,pokemons){
       //aqui rellenamos la data del api al estado pokemonsArray
       state.pokemonsArray=pokemons;
+    },
+    SET_POSTS_POKEMON_INFO(state,infoPokemon){
+      //aqui rellenamos la data del api al estado pokemonsArray
+      state.pokemonInfoArray=infoPokemon;
     }
   },//done the call to the apirest
   actions: {
@@ -33,12 +39,23 @@ export default new Vuex.Store({
             pokemons.push(pokemon);
           })
           //aqui enviamos la data al mutation para que lo rellene
-          commit('SET_POSTS',pokemons)
+          commit('SET_POSTS_POKEMONS',pokemons)
         })
         .catch(error =>{
           console.log(error);
         })
-    }   
+    },
+    //creamos la llamada al la info del pokemon detallada   
+    loadInfoPokemon({commit,state},id){
+      axios
+      .get(state.apiUrl+id)
+      .then(data=>{
+        commit('SET_POSTS_POKEMON_INFO',data.data);
+      })
+      .catch(error =>{
+        console.log(error);
+      })
+    }
   },
   modules: {
   }
