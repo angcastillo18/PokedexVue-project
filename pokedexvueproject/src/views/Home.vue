@@ -9,13 +9,16 @@
       </b-form>
       <b-row>
         <b-col class="col-xl-3 col-lg-4 col-md-4 col-sm-6  mb-4" v-for="(pokemon,index) in filteredList" :key="'poke'+index">
-          <b-card class="text-center pokemon-card" @click="loadInfoPokemon(pokemon.id)" footer-bg-variant="danger" :footer="pokemon.name">
+          <b-card v-b-modal.modal-pokemon class="text-center pokemon-card" @click="loadInfoPokemon(pokemon.id)" footer-bg-variant="danger" :footer="pokemon.name">
             <img :src="imageUrl+pokemon.id+'.png'" alt="image not found">
           </b-card>
         </b-col>
       </b-row>
     </b-container>
-    <pokemonDetail  />
+    <b-modal id="modal-pokemon" centered ok-only ok-variant="danger">
+      {{loadingState}}
+     <pokemonDetail  />
+    </b-modal>
   </div>
 </template>
 
@@ -37,7 +40,7 @@ export default {
       }
   },
   computed: {
-    ...mapState(['imageUrl','apiUrl','pokemonsArray','pokemonId']),
+    ...mapState(['imageUrl','apiUrl','pokemonsArray','pokemonId','loadingState']),
     
     //funcion Filtrar la lista de pokemones por la busqueda
     filteredList(){

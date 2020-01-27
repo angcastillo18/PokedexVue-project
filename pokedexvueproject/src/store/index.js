@@ -44,9 +44,10 @@ export default new Vuex.Store({
         .catch(error =>{
           console.log(error);
         })
+        
     },
     //creamos la llamada al la info del pokemon detallada   
-    loadInfoPokemon({commit,state},id){
+    loadInfoPokemon({commit,state},id){  
       axios
       .get(state.apiUrl+id)
       .then(data=>{

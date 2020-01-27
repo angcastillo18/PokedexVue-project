@@ -1,18 +1,50 @@
 <template>
-  <div >
-    <div>POKEMON {{pokemonInfoArray.name}}</div>
-    <div>BASE EXPERIENCE {{pokemonInfoArray.base_experience}} exp</div>
-    <div>ALTURA {{pokemonInfoArray.height/10}} m</div>
-    <div>Peso {{pokemonInfoArray.weight/10}} kg</div>
-    <div>POKEMON types 
-      <div v-for="(value,index) in pokemonInfoArray.types" :key="'value'+index" >{{value.type.name}}</div>
-    </div>
-    <div>POKEMON Abilities 
-      <div v-for="(value,index) in pokemonInfoArray.abilities" :key="'value'+index" >{{value.ability.name}}</div>
-    </div>
-    <b-modal id="modal-show">
-      <p>HOla</p>
-    </b-modal>
+  <div class="text-font container">
+    <b-row >
+      <b-col class="text-center">
+        <img :src="imageUrl + pokemonInfoArray.id + '.png'" alt="...cargando" class="pokemon-img">
+      </b-col>
+    </b-row>
+    <b-row >
+      <b-col  class="text-center pokemon-name">
+         {{pokemonInfoArray.name}}
+      </b-col>
+    </b-row>
+    <b-row align-h="between" class="style-info mt-2">
+      <b-col cols="5" class="px-0">
+         Experiencia Base :
+      </b-col>
+      <b-col cols="5" class="text-right px-0">
+         {{pokemonInfoArray.base_experience}} XP
+      </b-col>
+    </b-row>
+    <b-row align-h="between" class="style-info mt-2" >
+      <b-col cols="4" class="px-0">
+         Altura :
+      </b-col>
+      <b-col cols="4" class="text-right px-0">
+         {{pokemonInfoArray.height/10}} m
+      </b-col>
+    </b-row>
+    <b-row align-h="between" class="style-info mt-2" >
+      <b-col cols="4" class="px-0">
+         Peso :
+      </b-col>
+      <b-col cols="4" class="text-right px-0">
+         {{pokemonInfoArray.weight/10}} kg
+      </b-col>
+    </b-row>
+    <b-row class="mt-4 ">
+      <b-col cols="12" class="px-0 style-info" style="font-weight:bold;">Tipo(s) de pokemon : </b-col>
+
+      <div class="pokemon-types" v-for="(value,index) in pokemonInfoArray.types" :key="'value'+index">{{value.type.name}}</div>
+    </b-row>
+    <b-row class="mt-3">
+      <b-col cols="12"  class="px-0 style-info" style="font-weight:bold;">Habilidades : </b-col>
+
+      <div cols="12" class="pokemon-abilities" v-for="(value,index) in pokemonInfoArray.abilities" :key="'value'+index">{{value.ability.name}}</div>
+    </b-row>
+
   </div>
 </template>
 
@@ -28,14 +60,55 @@ export default {
       }
     },
     computed: {
-      ...mapState(['pokemonInfoArray'])
+      ...mapState(['pokemonInfoArray','imageUrl'])
     },
-   mounted() {
+/*    mounted() {
       this.$bvModal.show('modal-show')
-    }, 
+    }, */ 
 }
 </script>
 
-<style>
-
+<style scoped>
+.pokemon-name{
+    text-transform: capitalize;
+    color: black;
+    font-weight: bold;
+    margin: 5px 0;
+    font-size: 23px;
+}
+.pokemon-img{
+  background: rgb(83, 80, 80);
+  border-radius: 50%;
+  padding: 6px;
+}
+.text-right{
+  text-align: right;
+}
+.text-font{
+  font-family: 'Dosis', sans-serif;
+  font-size: 19px;
+}
+.style-info{
+  border-bottom: 0.5px solid rgba(73, 73, 73, 0.959);
+}
+.pokemon-types{
+  text-transform: capitalize;
+  background: rgb(7, 7, 124);
+  margin: 15px 5px;
+  text-align: center;
+  border-radius: 15px;
+  color: white;
+  padding: 5px 10px;
+  font-size: 15px;
+}
+.pokemon-abilities{
+  text-transform: capitalize;
+  background: rgb(216, 23, 23);
+  margin: 15px 5px;
+  text-align: center;
+  border-radius: 15px;
+  color: white;
+  padding: 5px 10px;
+    font-size: 15px;
+}
 </style>
