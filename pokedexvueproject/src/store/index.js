@@ -11,7 +11,8 @@ export default new Vuex.Store({
     apiUrl: 'https://pokeapi.co/api/v2/pokemon/',
     pokemonsArray:[],
     pokemonId:'',
-    pokemonInfoArray:[]
+    pokemonInfoArray:[],
+    loadingState:false
   },//refresh the state with mutation
   mutations: {
     SET_POSTS_POKEMONS(state,pokemons){
@@ -21,6 +22,13 @@ export default new Vuex.Store({
     SET_POSTS_POKEMON_INFO(state,infoPokemon){
       //aqui rellenamos la data del api al estado pokemonsArray
       state.pokemonInfoArray=infoPokemon;
+    },
+    //aqui modificamos el state loadingState
+    showLoading(state){
+      state.loadingState=true;
+    },
+    hideLoading(state){
+      state.loadingState=false;
     }
   },//done the call to the apirest
   actions: {
@@ -43,19 +51,33 @@ export default new Vuex.Store({
         })
         .catch(error =>{
           console.log(error);
-        })
-        
+        }) 
     },
     //creamos la llamada al la info del pokemon detallada   
-    loadInfoPokemon({commit,state},id){  
-      axios
+    async loadInfoPokemon({commit,state},id){  
+     try {
+       //cambiamos el estado del loading a true
+      commit('showLoading')
+       let data= await axios.get(state.apiUrl+id)
+       commit('SET_POSTS_POKEMON_INFO',data.data);
+     } catch (error) {
+       console.log(error)
+     }finally{
+       //cambiamos el estado del loading a false
+      commit('hideLoading') 
+     }
+/*       axios
       .get(state.apiUrl+id)
       .then(data=>{
         commit('SET_POSTS_POKEMON_INFO',data.data);
+        console.log(state.loadingState);
       })
       .catch(error =>{
         console.log(error);
       })
+      .finally(()=>{
+        commit('hideLoading') 
+      }) */
     }
   },
   modules: {

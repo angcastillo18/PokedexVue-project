@@ -9,15 +9,17 @@
       </b-form>
       <b-row>
         <b-col class="col-xl-3 col-lg-4 col-md-4 col-sm-6  mb-4" v-for="(pokemon,index) in filteredList" :key="'poke'+index">
-          <b-card v-b-modal.modal-pokemon class="text-center pokemon-card" @click="loadInfoPokemon(pokemon.id)" footer-bg-variant="danger" :footer="pokemon.name">
+          <b-card v-b-modal.modal-pokemon class="text-center pokemon-card" @click="showModalInfo(pokemon.id)" footer-bg-variant="danger" :footer="pokemon.name">
             <img :src="imageUrl+pokemon.id+'.png'" alt="image not found">
           </b-card>
         </b-col>
       </b-row>
     </b-container>
-    <b-modal id="modal-pokemon" centered ok-only ok-variant="danger">
-      {{loadingState}}
-     <pokemonDetail  />
+    <b-modal id="modal-pokemon" centered ok-only ok-variant="danger"  >
+     <div v-if="loadingState" class="text-center">
+            <b-spinner style="width: 3rem; height: 3rem;"  label="Spinning" ></b-spinner>
+     </div>
+     <pokemonDetail v-else  /> 
     </b-modal>
   </div>
 </template>
@@ -41,7 +43,6 @@ export default {
   },
   computed: {
     ...mapState(['imageUrl','apiUrl','pokemonsArray','pokemonId','loadingState']),
-    
     //funcion Filtrar la lista de pokemones por la busqueda
     filteredList(){
       return this.pokemonsArray.filter(pokemon=>{
@@ -50,7 +51,12 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['loadInfoPokemon','loadPokemons'])
+    ...mapActions(['loadInfoPokemon','loadPokemons']),
+    showModalInfo(id){
+      //abrimos el evento del modal y luego ejecutamos el action loadInfoPokemon
+      this.$root.$emit('bv::show::modal', 'modal-pokemon', '#btnShow')
+      this.loadInfoPokemon(id);
+    }
     /*
     async getPokemons(){
       try {
