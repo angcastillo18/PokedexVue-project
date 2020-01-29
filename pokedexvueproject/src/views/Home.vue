@@ -9,7 +9,7 @@
       </b-form>
       <b-row>
         <b-col class="col-xl-3 col-lg-4 col-md-4 col-sm-6  mb-4" v-for="(pokemon,index) in filteredList" :key="'poke'+index">
-          <b-card v-b-modal.modal-pokemon class="text-center pokemon-card" @click="showModalInfo(pokemon.id)" footer-bg-variant="danger" :footer="pokemon.name">
+          <b-card  class="text-center pokemon-card" @click="showModalInfo(pokemon.id)" footer-bg-variant="danger" :footer="pokemon.name">
             <img :src="imageUrl+pokemon.id+'.png'" alt="image not found">
           </b-card>
         </b-col>

@@ -24,12 +24,12 @@ export default new Vuex.Store({
       state.pokemonInfoArray=infoPokemon;
     },
     //aqui modificamos el state loadingState
-    showLoading(state){
-      state.loadingState=true;
-    },
+    setLoading(state,payload){
+      state.loadingState=payload;
+    }/* ,
     hideLoading(state){
       state.loadingState=false;
-    }
+    } */
   },//done the call to the apirest
   actions: {
     loadPokemons({commit,state}){
@@ -57,14 +57,14 @@ export default new Vuex.Store({
     async loadInfoPokemon({commit,state},id){  
      try {
        //cambiamos el estado del loading a true
-      commit('showLoading')
+      commit('setLoading',true)
        let data= await axios.get(state.apiUrl+id)
        commit('SET_POSTS_POKEMON_INFO',data.data);
      } catch (error) {
        console.log(error)
      }finally{
        //cambiamos el estado del loading a false
-      commit('hideLoading') 
+      commit('setLoading',false) 
      }
 /*       axios
       .get(state.apiUrl+id)
