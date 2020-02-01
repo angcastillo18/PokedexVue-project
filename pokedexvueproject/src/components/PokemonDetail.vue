@@ -42,7 +42,7 @@
 
             <div class="pokemon-types" v-for="(value,index) in pokemonInfoArray.types" :key="'value'+index">{{value.type.name}}</div>
           </b-row>
-          <b-row class="mt-3">
+          <b-row class="mt-2">
             <b-col cols="12"  class="px-0 style-info" style="font-weight:bold;">Habilidades : </b-col>
 
             <div cols="12" class="pokemon-abilities" v-for="(value,index) in pokemonInfoArray.abilities" :key="'value'+index">{{value.ability.name}}</div>
@@ -59,7 +59,6 @@
           </b-row>
         </b-tab>
       </b-tabs>
-
     </b-card>
     
 

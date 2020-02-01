@@ -15,7 +15,7 @@
         </b-col>
       </b-row>
     </b-container>
-    <b-modal id="modal-pokemon"  centered ok-only ok-variant="danger" :title="'Pokemon #' + pokemonId" >
+    <b-modal id="modal-pokemon"  centered ok-only ok-variant="danger" :hide-footer="true" :title="'Pokemon #' + pokemonId" >
      <div v-if="loadingState" class="text-center">
             <b-spinner style="width: 3rem; height: 3rem;"  label="Spinning" ></b-spinner>
      </div>
