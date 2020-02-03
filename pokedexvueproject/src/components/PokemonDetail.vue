@@ -50,11 +50,11 @@
         </b-tab>
         <b-tab title="Mis estadísticas">
           <b-row  v-for="(value,index) in pokemonInfoArray.stats" :key="'value'+index">
-            <b-col class="my-2" cols="6" >
+            <b-col class="my-2 stats-name" cols="6" >
               {{value.stat.name}} 
             </b-col>
             <b-col class="my-2" cols="6">
-              <b-progress :value="value.base_stat" variant="danger" max=180 show-value  ></b-progress>
+              <b-progress :value="value.base_stat"  max=180 show-value  ></b-progress>
             </b-col>
           </b-row>
         </b-tab>
@@ -76,7 +76,9 @@ export default {
         urlPokemon:'',
         greatStat:'success',
         mediumStat:'warning',
-        badStat:'danger'
+        badStat:'danger',
+        estado:true,
+        variants: ['danger']
       }
     },
     computed: {
@@ -131,5 +133,8 @@ export default {
   color: white;
   padding: 5px 10px;
     font-size: 15px;
+}
+.stats-name{
+    text-transform: capitalize;
 }
 </style>
