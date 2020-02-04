@@ -37,7 +37,7 @@ export default new Vuex.Store({
       let pokemons=[];
       axios
       //solo trabajaremos con 200 pokemones
-        .get(state.apiUrl +'?limit=200')
+        .get(state.apiUrl +'?limit=897')
         .then(data=>{         
           data.data.results.forEach(pokemon=>{
              //en el mismo then() le agregamos el campo id y lo guardamos en 
@@ -47,6 +47,7 @@ export default new Vuex.Store({
             //agregamos ese campo id al arreglo de pokemons
             pokemons.push(pokemon);
           })
+          console.log("llamando al api")
           //aqui enviamos la data al mutation para que lo rellene
           commit('SET_POSTS_POKEMONS',pokemons)
         })

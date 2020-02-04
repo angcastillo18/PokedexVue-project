@@ -13,7 +13,7 @@
 <!--             <img :src="imageUrl+pokemon.id+'.png'" alt="image not found"> -->
             <vue-load-image>
               <img slot="image" :src="imageUrl+pokemon.id+'.png'"/>
-              <img slot="preloader" src="../assets/loading1.gif"/>
+              <img slot="preloader" src="../assets/loader.gif"/>
               <div slot="error">error message</div>
             </vue-load-image>
           </b-card>
@@ -34,6 +34,8 @@
 import pokemonDetail from '@/components/PokemonDetail.vue'
 /* //importar axios
 import axios from "axios"; */
+//import library vueloadimage
+//para mostrar gift de carga cuando aun no renderiza la imagen
 import VueLoadImage from 'vue-load-image'
 
 
@@ -93,10 +95,13 @@ export default {
 
   } ,
   created() {
-    //this.getPokemons();
     //llamar a la action del store ApiPokemons
     //this.$store.dispatch('loadPokemons')
-    this.loadPokemons();
+
+    //con esto solo llamamos una vez al api de los pokemones,solo cuando ya se llene el arreglo de pokemones
+    if(this.pokemonsArray.length==0){
+      this.loadPokemons();
+    }
   }
 } 
 </script>
