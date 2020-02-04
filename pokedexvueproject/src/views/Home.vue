@@ -10,7 +10,12 @@
       <b-row>
         <b-col class="col-xl-3 col-lg-4 col-md-4 col-sm-6  mb-4" v-for="(pokemon,index) in filteredList" :key="'poke'+index">
           <b-card  class="text-center pokemon-card" @click="showModalInfo(pokemon.id)" footer-bg-variant="danger" :footer="pokemon.name">
-            <img :src="imageUrl+pokemon.id+'.png'" alt="image not found">
+<!--             <img :src="imageUrl+pokemon.id+'.png'" alt="image not found"> -->
+            <vue-load-image>
+              <img slot="image" :src="imageUrl+pokemon.id+'.png'"/>
+              <img slot="preloader" src="../assets/loading1.gif"/>
+              <div slot="error">error message</div>
+            </vue-load-image>
           </b-card>
         </b-col>
       </b-row>
@@ -29,12 +34,16 @@
 import pokemonDetail from '@/components/PokemonDetail.vue'
 /* //importar axios
 import axios from "axios"; */
+import VueLoadImage from 'vue-load-image'
+
+
 import {mapState,mapActions} from "vuex";
 
 export default {
   name: 'home',
   components: {
-    pokemonDetail
+    pokemonDetail,
+    'vue-load-image': VueLoadImage
   },
   data() {
       return {

@@ -54,7 +54,7 @@
               {{value.stat.name}} 
             </b-col>
             <b-col class="my-2" cols="6">
-              <b-progress :value="value.base_stat"  max=180 show-value  ></b-progress>
+              <b-progress :value="value.base_stat" variant="info"  max=180 show-value  ></b-progress>
             </b-col>
           </b-row>
         </b-tab>
@@ -73,12 +73,7 @@ export default {
     name:'PokemonDetail',
     data() {
       return {
-        urlPokemon:'',
-        greatStat:'success',
-        mediumStat:'warning',
-        badStat:'danger',
-        estado:true,
-        variants: ['danger']
+        urlPokemon:''
       }
     },
     computed: {
